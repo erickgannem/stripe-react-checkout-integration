@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Container = styled.div`
+export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -9,5 +9,9 @@ const Container = styled.div`
   background-color: #bcaaa4;
   border-radius: 5px;
 `;
-
-export default Container;
+export const AppTitle = styled.h1`
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  color: #212121;
+`;

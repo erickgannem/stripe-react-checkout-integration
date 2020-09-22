@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import StyledCheckoutForm from './styled/StyledCheckoutForm';
+import { Form } from './styled';
 
 function CheckoutForm() {
   const stripe = useStripe();
@@ -26,7 +26,7 @@ function CheckoutForm() {
   };
 
   return (
-    <StyledCheckoutForm onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <CardElement
         options={{
           style: {
@@ -46,7 +46,7 @@ function CheckoutForm() {
       <button type="submit" disabled={!stripe}>
         Pay
       </button>
-    </StyledCheckoutForm>
+    </Form>
   );
 }
 
