@@ -2,9 +2,18 @@ import React from 'react';
 
 import { StyledButton } from './styled';
 
-function ResetButton() {
+interface ClickHandler {
+  (): void;
+}
+interface Props {
+  title: string;
+  clickHandler: ClickHandler;
+}
+
+function ResetButton(props: Props) {
+  const { title, clickHandler } = props;
   return (
-    <StyledButton />
+    <StyledButton onClick={clickHandler}>{title}</StyledButton>
   );
 }
 

@@ -4,6 +4,7 @@ import { PaymentMethod, StripeError } from '@stripe/stripe-js';
 import { Form } from './styled';
 import Field from '../Field';
 import ResetButton from '../ResetButton';
+import CardField from '../CardField';
 
 interface BillingDetails {
   email: string;
@@ -66,8 +67,8 @@ function CheckoutForm() {
   };
 
   return paymentMethod ? (
-    <div className="Result">
-      <div className="ResultTitle" role="alert">
+    <div>
+      <div role="alert">
         Payment successful
       </div>
       <div className="ResultMessage">
@@ -76,7 +77,7 @@ function CheckoutForm() {
         {' '}
         {paymentMethod.id}
       </div>
-      {/* <ResetButton /> */}
+      <ResetButton title="Reset" clickHandler={reset} />
     </div>
   ) : (
     <Form onSubmit={handleSubmit}>
@@ -118,22 +119,7 @@ function CheckoutForm() {
           }}
         />
       </fieldset>
-      <CardElement
-        options={{
-          style: {
-            base: {
-              fontSize: '16px',
-              color: '#3e2723',
-              '::placeholder': {
-                color: '#212121',
-              },
-            },
-            invalid: {
-              color: '#9e2146',
-            },
-          },
-        }}
-      />
+      <CardField />
       <button type="submit" disabled={!stripe}>
         Pay
       </button>
