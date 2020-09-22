@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { PaymentMethod, StripeError } from '@stripe/stripe-js';
 import { Form } from './styled';
 import Field from '../Field';
+import ResetButton from '../ResetButton';
 
 interface BillingDetails {
   email: string;
@@ -10,34 +12,73 @@ interface BillingDetails {
 }
 
 function CheckoutForm() {
+  const [error, setError] = useState<StripeError | null>();
+  const [cardComplete, setCardComplete] = useState(null);
+  const [processing, setProcessing] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>();
   const [billingDetails, setBillingDetails] = useState<BillingDetails>({
     email: '',
     phone: '',
     name: '',
   });
+
   const stripe = useStripe();
   const elements = useElements();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (stripe && elements) {
+      if (error) {
+        const card = elements.getElement('card');
+        if (card) return card.focus();
+      }
+      if (cardComplete) {
+        setProcessing(true);
+      }
       const cardElement = elements.getElement(CardElement);
+
       if (cardElement) {
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
+        const payload = await stripe.createPaymentMethod({
           type: 'card',
           card: cardElement,
+          billing_details: billingDetails,
         });
 
-        if (error) {
-          console.log('[error]', error);
+        setProcessing(false);
+
+        if (payload.error) {
+          setError(payload.error);
         } else {
-          console.log('[PaymentMethod]', paymentMethod);
+          setPaymentMethod(payload.paymentMethod);
         }
       }
     }
   };
+  const reset = () => {
+    setError(null);
+    setProcessing(false);
+    setPaymentMethod(null);
+    setBillingDetails({
+      email: '',
+      phone: '',
+      name: '',
+    });
+  };
 
-  return (
+  return paymentMethod ? (
+    <div className="Result">
+      <div className="ResultTitle" role="alert">
+        Payment successful
+      </div>
+      <div className="ResultMessage">
+        Thanks for trying Stripe Elements. No money was charged, but we
+        generated a PaymentMethod:
+        {' '}
+        {paymentMethod.id}
+      </div>
+      {/* <ResetButton /> */}
+    </div>
+  ) : (
     <Form onSubmit={handleSubmit}>
       <fieldset>
         <Field
