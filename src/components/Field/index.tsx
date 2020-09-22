@@ -18,8 +18,8 @@ interface IField {
 const Field = ({
   label, id, type, placeholder, required, autoComplete, value, onChange,
 }: IField) => (
-  <div>
-    <label htmlFor="{id}">{label}</label>
+  <div style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+    <label htmlFor={id}>{label}</label>
     <input
       id={id}
       type={type}

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Form } from './styled';
+import Field from '../Field';
 
 function CheckoutForm() {
+  const [billingDetails, setBillingDetails] = useState({});
   const stripe = useStripe();
   const elements = useElements();
 
@@ -27,6 +29,18 @@ function CheckoutForm() {
 
   return (
     <Form onSubmit={handleSubmit}>
+      <fieldset>
+        <Field
+          label="name"
+          id="name"
+          type="text"
+          placeholder="Erick Gannem"
+          required
+          autoComplete="name"
+          value={billingDetails.name}
+          onChange={(e) => { setBillingDetails({ ...billingDetails, name: e.target.value }); }}
+        />
+      </fieldset>
       <CardElement
         options={{
           style: {
