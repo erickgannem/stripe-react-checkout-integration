@@ -3,8 +3,18 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Form } from './styled';
 import Field from '../Field';
 
+interface BillingDetails {
+  email: string;
+  phone: string;
+  name: string;
+}
+
 function CheckoutForm() {
-  const [billingDetails, setBillingDetails] = useState({});
+  const [billingDetails, setBillingDetails] = useState<BillingDetails>({
+    email: '',
+    phone: '',
+    name: '',
+  });
   const stripe = useStripe();
   const elements = useElements();
 
@@ -38,7 +48,33 @@ function CheckoutForm() {
           required
           autoComplete="name"
           value={billingDetails.name}
-          onChange={(e) => { setBillingDetails({ ...billingDetails, name: e.target.value }); }}
+          onChange={(e) => {
+            setBillingDetails({ ...billingDetails, name: e.currentTarget.value });
+          }}
+        />
+        <Field
+          label="email"
+          id="email"
+          type="text"
+          placeholder="erickgannem@gmail.com"
+          required
+          autoComplete="email"
+          value={billingDetails.email}
+          onChange={(e) => {
+            setBillingDetails({ ...billingDetails, email: e.currentTarget.value });
+          }}
+        />
+        <Field
+          label="phone"
+          id="phone"
+          type="text"
+          placeholder="Erick Gannem"
+          required
+          autoComplete="phone"
+          value={billingDetails.phone}
+          onChange={(e) => {
+            setBillingDetails({ ...billingDetails, phone: e.currentTarget.value });
+          }}
         />
       </fieldset>
       <CardElement

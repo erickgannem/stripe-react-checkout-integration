@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
-interface IOnChange<FormEvent> {
- (e: FormEvent): void;
+interface IOnChange<T> {
+ (e: T): void;
 }
 
 interface IField {
@@ -12,7 +12,7 @@ interface IField {
   required: boolean;
   autoComplete: string;
   value: string;
- onChange: IOnChange<React.FormEvent>;
+  onChange: IOnChange<ChangeEvent<HTMLInputElement>>;
 }
 
 const Field = ({
