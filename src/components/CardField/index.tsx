@@ -14,7 +14,7 @@ const CARD_OPTIONS: StripeCardElementOptions = {
   iconStyle: 'solid',
   style: {
     base: {
-      iconColor: '#c4f0ff',
+      iconColor: '#3e2723',
       color: '#fff',
       fontWeight: '500',
       fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
@@ -24,7 +24,7 @@ const CARD_OPTIONS: StripeCardElementOptions = {
         color: '#fce883',
       },
       '::placeholder': {
-        color: '#87bbfd',
+        color: '#3e2723',
       },
     },
     invalid: {
@@ -36,12 +36,10 @@ const CARD_OPTIONS: StripeCardElementOptions = {
 
 function CardField({ handleCardChange }: Props) {
   return (
-    <FormRow>
-      <CardElement
-        onChange={handleCardChange}
-        options={CARD_OPTIONS}
-      />
-    </FormRow>
+    <CardElement
+      onChange={handleCardChange}
+      options={CARD_OPTIONS}
+    />
 
   );
 }

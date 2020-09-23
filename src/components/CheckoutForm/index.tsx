@@ -36,10 +36,10 @@ function CheckoutForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (stripe && elements) {
-      if (error) {
-        const card = elements.getElement('card');
-        if (card) return card.focus();
-      }
+      // if (error) {
+      //   const card = elements.getElement('card');
+      //   if (card) return card.focus();
+      // }
       if (cardComplete) {
         setProcessing(true);
       }

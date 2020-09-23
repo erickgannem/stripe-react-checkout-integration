@@ -6,9 +6,7 @@ const StyledSubmitButton = styled.button`
   width: calc(100% - 30px);
   height: 40px;
   margin: 40px 15px 0;
-  background-color: #f6a4eb;
-  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 #ffb9f6;
+  background-color: #0277bd;
   border-radius: 4px;
   color: #fff;
   font-weight: 600;
