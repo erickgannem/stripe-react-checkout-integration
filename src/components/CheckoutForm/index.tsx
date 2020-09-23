@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { PaymentMethod, StripeError, StripeCardElementChangeEvent } from '@stripe/stripe-js';
+import {
+  PaymentMethod, StripeError, StripeCardElementChangeEvent, StripeElementChangeEvent,
+} from '@stripe/stripe-js';
 import { Form } from './styled';
 import Field from '../Field';
 import ResetButton from '../ResetButton';
 import CardField from '../CardField';
+import { FormGroup } from '../Structure';
+import SubmitButton from '../SubmitButton';
 
 interface BillingDetails {
   email: string;
@@ -12,8 +16,11 @@ interface BillingDetails {
   name: string;
 }
 
+// duplication on SubmitButton
+type Error = StripeError | StripeElementChangeEvent['error'] | null
+
 function CheckoutForm() {
-  const [error, setError] = useState<StripeError | null>();
+  const [error, setError] = useState<Error>(null);
   const [cardComplete, setCardComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>();
@@ -84,7 +91,7 @@ function CheckoutForm() {
     </div>
   ) : (
     <Form onSubmit={handleSubmit}>
-      <fieldset>
+      <FormGroup>
         <Field
           label="name"
           id="name"
@@ -121,11 +128,11 @@ function CheckoutForm() {
             setBillingDetails({ ...billingDetails, phone: e.currentTarget.value });
           }}
         />
-      </fieldset>
+      </FormGroup>
       <CardField handleCardChange={handleCardChange} />
-      <button type="submit" disabled={!stripe}>
+      <SubmitButton processing={processing} error={error} disabled={!stripe}>
         Pay
-      </button>
+      </SubmitButton>
     </Form>
   );
 }

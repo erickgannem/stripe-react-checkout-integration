@@ -20,6 +20,6 @@
     "jsx": "react",
   },
   "include": [
-    "src", "customTypes", "src/modules.d.ts"
+    "src", "declarations", "src/modules.d.ts"
   ]
 }

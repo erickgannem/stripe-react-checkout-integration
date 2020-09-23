@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from 'react';
+import { FormRow, FormRowLabel, FormRowInput } from '../Structure';
 
 interface IOnChange<T> {
  (e: T): void;
@@ -18,9 +19,9 @@ interface IField {
 const Field = ({
   label, id, type, placeholder, required, autoComplete, value, onChange,
 }: IField) => (
-  <div style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-    <label htmlFor={id}>{label}</label>
-    <input
+  <FormRow>
+    <FormRowLabel htmlFor={id}>{label}</FormRowLabel>
+    <FormRowInput
       id={id}
       type={type}
       placeholder={placeholder}
@@ -29,7 +30,7 @@ const Field = ({
       value={value}
       onChange={onChange}
     />
-  </div>
+  </FormRow>
 );
 
 export default Field;
