@@ -33,13 +33,24 @@ function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
+  const sendDataToApi = async (baseUrl: string, paymentData: PaymentMethod) => {
+    try {
+      const response = await fetch(`${baseUrl}/payment_intent`, {
+        method: 'POST',
+        body: paymentData,
+      });
+      if (response.status === 200) {
+        return response;
+      }
+      throw new Error('Error sending information to server');
+    } catch (err) {
+      return setError(err);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (stripe && elements) {
-      // if (error) {
-      //   const card = elements.getElement('card');
-      //   if (card) return card.focus();
-      // }
       if (cardComplete) {
         setProcessing(true);
       }
