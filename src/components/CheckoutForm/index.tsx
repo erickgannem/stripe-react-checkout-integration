@@ -3,6 +3,7 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import {
   PaymentMethod, StripeError, StripeCardElementChangeEvent, StripeElementChangeEvent,
 } from '@stripe/stripe-js';
+import Stripe from 'stripe';
 import { Form } from './styled';
 import Field from '../Field';
 import ResetButton from '../ResetButton';
@@ -15,7 +16,6 @@ interface BillingDetails {
   phone: string;
   name: string;
 }
-
 // duplication on SubmitButton
 type Error = StripeError | StripeElementChangeEvent['error'] | null
 
@@ -33,11 +33,15 @@ function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
-  const sendDataToApi = async (baseUrl: string, paymentData: PaymentMethod) => {
+  interface BodyObject {
+    amount: number;
+    paymentData: PaymentMethod
+  }
+  const sendPaymentToApi = async (baseUrl: string, body: BodyObject) => {
     try {
       const response = await fetch(`${baseUrl}/payment_intent`, {
         method: 'POST',
-        body: paymentData,
+        body: JSON.stringify(body),
       });
       if (response.status === 200) {
         return response;
@@ -65,10 +69,12 @@ function CheckoutForm() {
 
         setProcessing(false);
 
-        if (payload.error) {
-          setError(payload.error);
-        } else {
+        if (payload.paymentMethod) {
           setPaymentMethod(payload.paymentMethod);
+          // hardcoded value "amount"
+          sendPaymentToApi('localhost:3030', { amount: 3000, paymentData: payload.paymentMethod });
+        } else {
+          setError(error);
         }
       }
     }
