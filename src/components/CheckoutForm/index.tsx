@@ -3,7 +3,6 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import {
   PaymentMethod, StripeError, StripeCardElementChangeEvent, StripeElementChangeEvent,
 } from '@stripe/stripe-js';
-import Stripe from 'stripe';
 import { Form } from './styled';
 import Field from '../Field';
 import ResetButton from '../ResetButton';
@@ -37,9 +36,9 @@ function CheckoutForm() {
     amount: number;
     paymentData: PaymentMethod
   }
-  const sendPaymentToApi = async (baseUrl: string, body: BodyObject) => {
+  const sendPaymentToApi = async (endpoint: string, body: BodyObject) => {
     try {
-      const response = await fetch(`${baseUrl}/payment_intent`, {
+      const response = await fetch(endpoint, {
         method: 'POST',
         body: JSON.stringify(body),
       });
@@ -71,8 +70,7 @@ function CheckoutForm() {
 
         if (payload.paymentMethod) {
           setPaymentMethod(payload.paymentMethod);
-          // hardcoded value "amount"
-          sendPaymentToApi('localhost:3030', { amount: 3000, paymentData: payload.paymentMethod });
+          sendPaymentToApi('https://localhost:3030/payment_intent', { amount: 3000, paymentData: payload.paymentMethod });
         } else {
           setError(error);
         }
