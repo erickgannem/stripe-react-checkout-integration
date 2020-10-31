@@ -37,13 +37,19 @@ function CheckoutForm() {
     paymentData: PaymentMethod
   }
 
-  const sendPaymentToApi = async (endpoint: string, body: BodyObject) => fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
+  const sendPaymentIntentToAPI = async (endpoint: string, body: BodyObject) => {
+    try {
+      fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+    } catch (err) {
+      throw new Error('There was a problem reaching the API');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,7 +71,7 @@ function CheckoutForm() {
         if (payload.paymentMethod) {
           setPaymentMethod(payload.paymentMethod);
           try {
-            await sendPaymentToApi('https://localhost:3030/payment_intent', { amount: 3000, paymentData: payload.paymentMethod });
+            await sendPaymentIntentToAPI('https://localhost:3030/payment_intent', { amount: 3000, paymentData: payload.paymentMethod });
           } catch (err) {
             setError(err);
           }
