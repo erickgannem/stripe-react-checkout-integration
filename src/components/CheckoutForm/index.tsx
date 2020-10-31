@@ -16,10 +16,10 @@ interface BillingDetails {
   name: string;
 }
 // duplication on SubmitButton
-type Error = StripeError | StripeElementChangeEvent['error'] | null
+type AppError = StripeError | StripeElementChangeEvent['error'] | null | {}
 
 function CheckoutForm() {
-  const [error, setError] = useState<Error>(null);
+  const [error, setError] = useState<AppError>(null);
   const [cardComplete, setCardComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>();
@@ -36,20 +36,14 @@ function CheckoutForm() {
     amount: number;
     paymentData: PaymentMethod
   }
-  const sendPaymentToApi = async (endpoint: string, body: BodyObject) => {
-    try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        body: JSON.stringify(body),
-      });
-      if (response.status === 200) {
-        return response;
-      }
-      throw new Error('Error sending information to server');
-    } catch (err) {
-      return setError(err);
-    }
-  };
+
+  const sendPaymentToApi = async (endpoint: string, body: BodyObject) => fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,7 +64,11 @@ function CheckoutForm() {
 
         if (payload.paymentMethod) {
           setPaymentMethod(payload.paymentMethod);
-          sendPaymentToApi('https://localhost:3030/payment_intent', { amount: 3000, paymentData: payload.paymentMethod });
+          try {
+            await sendPaymentToApi('https://localhost:3030/payment_intent', { amount: 3000, paymentData: payload.paymentMethod });
+          } catch (err) {
+            setError(err);
+          }
         } else {
           setError(error);
         }
