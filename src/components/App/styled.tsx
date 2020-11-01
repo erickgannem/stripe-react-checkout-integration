@@ -1,17 +1,19 @@
 import styled from 'styled-components';
 
+import colorScheme from '../../colorScheme';
+const {background, primary, light} = colorScheme;
+
 export const Container = styled.div`
+  background-color: ${background};
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid #a1887f;
-  padding: 25px;
-  background-color: #bcaaa4;
-  border-radius: 5px;
+  padding: 15px;
+  border-radius: 3px;
 `;
 export const AppTitle = styled.h1`
+  color: ${light};
   font-size: 24px;
   margin: 0;
-  padding: 0;
-  color: #212121;
+  margin-bottom: 10px;
 `;

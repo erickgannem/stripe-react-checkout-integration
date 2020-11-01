@@ -39,7 +39,7 @@ function CheckoutForm() {
 
   const sendPaymentIntentToAPI = async (endpoint: string, body: BodyObject) => {
     try {
-      fetch(endpoint, {
+      return fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -112,10 +112,10 @@ function CheckoutForm() {
     <Form onSubmit={handleSubmit}>
       <FormGroup>
         <Field
-          label="name"
+          label="Name"
           id="name"
           type="text"
-          placeholder="Erick Gannem"
+          placeholder="Ex: Erick Gannem"
           required
           autoComplete="name"
           value={billingDetails.name}
@@ -124,10 +124,10 @@ function CheckoutForm() {
           }}
         />
         <Field
-          label="email"
+          label="Email"
           id="email"
           type="text"
-          placeholder="erickgannem@gmail.com"
+          placeholder="Ex: erickgannem@gmail.com"
           required
           autoComplete="email"
           value={billingDetails.email}
@@ -136,10 +136,10 @@ function CheckoutForm() {
           }}
         />
         <Field
-          label="phone"
+          label="Phone"
           id="phone"
           type="text"
-          placeholder="Erick Gannem"
+          placeholder="Ex: xx-x-xxxx-xxxx"
           required
           autoComplete="phone"
           value={billingDetails.phone}
