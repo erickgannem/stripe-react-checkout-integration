@@ -6,6 +6,7 @@ export const FormGroup = styled.fieldset`
   background: ${colorScheme.backgroundLight};
   border: none;
   color: ${colorScheme.onBackgroundLight};
+  margin-bottom: 20px;
 `;
 
 export const FormRow = styled.div`

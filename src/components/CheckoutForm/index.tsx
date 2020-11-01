@@ -10,6 +10,8 @@ import CardField from '../CardField';
 import { FormGroup } from '../Structure';
 import SubmitButton from '../SubmitButton';
 
+import appConfig from '../../app.config';
+
 interface BillingDetails {
   email: string;
   phone: string;
@@ -71,7 +73,7 @@ function CheckoutForm() {
         if (payload.paymentMethod) {
           setPaymentMethod(payload.paymentMethod);
           try {
-            await sendPaymentIntentToAPI('https://localhost:3030/payment_intent', { amount: 3000, paymentData: payload.paymentMethod });
+            await sendPaymentIntentToAPI(`${appConfig.baseURL}/payment_intent`, { amount: 3000, paymentData: payload.paymentMethod });
           } catch (err) {
             setError(err);
           }

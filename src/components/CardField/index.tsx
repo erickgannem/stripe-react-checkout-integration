@@ -4,7 +4,6 @@ import { StripeCardElementChangeEvent, StripeCardElementOptions } from '@stripe/
 
 import colorScheme from '../../colorScheme';
 
-
 interface HandleCardChange {
   (e: StripeCardElementChangeEvent): void;
 }
