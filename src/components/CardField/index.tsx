@@ -1,7 +1,9 @@
 import React from 'react';
 import { CardElement } from '@stripe/react-stripe-js';
 import { StripeCardElementChangeEvent, StripeCardElementOptions } from '@stripe/stripe-js';
-import { FormRow } from '../Structure';
+
+import colorScheme from '../../colorScheme';
+
 
 interface HandleCardChange {
   (e: StripeCardElementChangeEvent): void;
@@ -14,17 +16,17 @@ const CARD_OPTIONS: StripeCardElementOptions = {
   iconStyle: 'solid',
   style: {
     base: {
-      iconColor: '#3e2723',
-      color: '#fff',
+      padding: 5,
+      iconColor: colorScheme.onBackgroundLight,
       fontWeight: '500',
       fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
       fontSize: '16px',
       fontSmoothing: 'antialiased',
       ':-webkit-autofill': {
-        color: '#fce883',
+        color: colorScheme.onBackgroundLight,
       },
       '::placeholder': {
-        color: '#3e2723',
+        color: colorScheme.onBackgroundLight,
       },
     },
     invalid: {
