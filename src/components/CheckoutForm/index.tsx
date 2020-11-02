@@ -12,6 +12,8 @@ import SubmitButton from '../SubmitButton';
 
 import appConfig from '../../app.config';
 
+const publishableApiKey = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
+
 interface BillingDetails {
   email: string;
   phone: string;
@@ -44,6 +46,7 @@ function CheckoutForm() {
       return fetch(endpoint, {
         method: 'POST',
         headers: {
+          Authorization: `Bearer ${publishableApiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
@@ -73,7 +76,7 @@ function CheckoutForm() {
         if (payload.paymentMethod) {
           setPaymentMethod(payload.paymentMethod);
           try {
-            await sendPaymentIntentToAPI(`${appConfig.baseURL}/payment_intent`, { amount: 3000, paymentData: payload.paymentMethod });
+            await sendPaymentIntentToAPI(`${appConfig.baseURLTest}/payment_intent`, { amount: 10, paymentData: payload.paymentMethod });
           } catch (err) {
             setError(err);
           }

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 import colorScheme from '../../colorScheme';
-const {background, primary, light} = colorScheme;
+
+const { background, light } = colorScheme;
 
 export const Container = styled.div`
   background-color: ${background};
