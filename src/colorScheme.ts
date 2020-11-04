@@ -6,4 +6,4 @@ export default {
   light: '#fff3e0',
   dark: '#1b1b1b', // Grey 800
 
-}
+};

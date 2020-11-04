@@ -6,6 +6,7 @@ export const FormGroup = styled.fieldset`
   background: ${colorScheme.backgroundLight};
   border: none;
   color: ${colorScheme.onBackgroundLight};
+  margin: 0;
   margin-bottom: 20px;
 `;
 

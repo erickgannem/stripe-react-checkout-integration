@@ -1,6 +1,7 @@
 import React from 'react';
 import { CardElement } from '@stripe/react-stripe-js';
 import { StripeCardElementChangeEvent, StripeCardElementOptions } from '@stripe/stripe-js';
+import CardFieldWrapper from './styled';
 
 import colorScheme from '../../colorScheme';
 
@@ -15,7 +16,7 @@ const CARD_OPTIONS: StripeCardElementOptions = {
   iconStyle: 'solid',
   style: {
     base: {
-      padding: 5,
+      color: colorScheme.onBackgroundLight,
       iconColor: colorScheme.onBackgroundLight,
       fontWeight: '500',
       fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
@@ -37,10 +38,12 @@ const CARD_OPTIONS: StripeCardElementOptions = {
 
 function CardField({ handleCardChange }: Props) {
   return (
-    <CardElement
-      onChange={handleCardChange}
-      options={CARD_OPTIONS}
-    />
+    <CardFieldWrapper>
+      <CardElement
+        onChange={handleCardChange}
+        options={CARD_OPTIONS}
+      />
+    </CardFieldWrapper>
 
   );
 }
