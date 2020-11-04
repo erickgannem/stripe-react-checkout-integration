@@ -32,12 +32,13 @@ function CheckoutForm() {
     phone: '',
     name: '',
   });
+  const [amount, setAmount] = useState('');
 
   const stripe = useStripe();
   const elements = useElements();
 
   interface BodyObject {
-    amount: number;
+    amount: string;
     paymentData: PaymentMethod
   }
 
@@ -76,7 +77,7 @@ function CheckoutForm() {
         if (payload.paymentMethod) {
           setPaymentMethod(payload.paymentMethod);
           try {
-            await sendPaymentIntentToAPI(`${appConfig.baseURLTest}/payment_intent`, { amount: 10, paymentData: payload.paymentMethod });
+            await sendPaymentIntentToAPI(`${appConfig.baseURL}/payment_intent`, { amount, paymentData: payload.paymentMethod });
           } catch (err) {
             setError(err);
           }
@@ -153,7 +154,22 @@ function CheckoutForm() {
           }}
         />
       </FormGroup>
-      <CardField handleCardChange={handleCardChange} />
+      <FormGroup>
+        <Field
+          label="Amount"
+          id="amount"
+          type="text"
+          placeholder="0.00"
+          required
+          autoComplete="amount"
+          value={amount}
+          onChange={(e) => {
+            setAmount(e.target.value);
+          }}
+        />
+        <CardField handleCardChange={handleCardChange} />
+
+      </FormGroup>
       <SubmitButton processing={processing} error={error} disabled={!stripe}>
         Pay
       </SubmitButton>
